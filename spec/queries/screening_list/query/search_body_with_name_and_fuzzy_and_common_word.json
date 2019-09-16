@@ -1,0 +1,104 @@
+{
+    "highlight": {
+        "fields": {
+            "alt_idx": {},
+            "alt_no_ws": {},
+            "alt_no_ws_rev": {},
+            "alt_no_ws_with_common": {},
+            "name_idx": {},
+            "name_no_ws": {},
+            "name_no_ws_rev": {},
+            "name_no_ws_with_common": {}
+        },
+        "order": "score"
+    },
+    "query": {
+        "bool": {
+            "disable_coord": true,
+            "minimum_should_match": 1,
+            "should": [
+                {
+                    "function_score": {
+                        "boost_mode": "replace",
+                        "functions": [
+                            {
+                                "weight": 5
+                            }
+                        ],
+                        "query": {
+                            "multi_match": {
+                                "fields": [
+                                    "name_idx",
+                                    "alt_idx",
+                                    "name_no_ws",
+                                    "name_no_ws_rev",
+                                    "alt_no_ws",
+                                    "alt_no_ws_rev",
+                                    "name_no_ws_with_common",
+                                    "alt_no_ws_with_common"
+                                ],
+                                "fuzziness": 0,
+                                "operator": "and",
+                                "query": ""
+                            }
+                        }
+                    }
+                },
+                {
+                    "function_score": {
+                        "boost_mode": "replace",
+                        "functions": [
+                            {
+                                "weight": 5
+                            }
+                        ],
+                        "query": {
+                            "multi_match": {
+                                "fields": [
+                                    "name_idx",
+                                    "alt_idx",
+                                    "name_no_ws",
+                                    "name_no_ws_rev",
+                                    "alt_no_ws",
+                                    "alt_no_ws_rev",
+                                    "name_no_ws_with_common",
+                                    "alt_no_ws_with_common"
+                                ],
+                                "fuzziness": 1,
+                                "operator": "and",
+                                "query": ""
+                            }
+                        }
+                    }
+                },
+                {
+                    "function_score": {
+                        "boost_mode": "replace",
+                        "functions": [
+                            {
+                                "weight": 90
+                            }
+                        ],
+                        "query": {
+                            "multi_match": {
+                                "fields": [
+                                    "name_idx",
+                                    "alt_idx",
+                                    "name_no_ws",
+                                    "name_no_ws_rev",
+                                    "alt_no_ws",
+                                    "alt_no_ws_rev",
+                                    "name_no_ws_with_common",
+                                    "alt_no_ws_with_common"
+                                ],
+                                "fuzziness": 2,
+                                "operator": "and",
+                                "query": ""
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

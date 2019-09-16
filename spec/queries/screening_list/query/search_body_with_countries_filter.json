@@ -1,0 +1,53 @@
+{
+  "query": {
+    "bool": {
+      "filter": {
+        "bool": {
+          "minimum_should_match":1,
+          "should": [
+            {
+              "terms": {
+                "addresses.country": [
+                  "US",
+                  "CA"
+                ]
+              }
+            },
+            {
+              "terms": {
+                "ids.country": [
+                  "US",
+                  "CA"
+                ]
+              }
+            },
+            {
+              "terms": {
+                "nationalities": [
+                  "US",
+                  "CA"
+                ]
+              }
+            },
+            {
+              "terms": {
+                "citizenships": [
+                  "US",
+                  "CA"
+                ]
+              }
+            },
+            {
+              "terms": {
+                "country": [
+                  "US",
+                  "CA"
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

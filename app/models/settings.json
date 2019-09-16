@@ -1,0 +1,52 @@
+{
+  "index": {
+    "number_of_shards": "1",
+    "analysis": {
+      "analyzer": {
+        "snowball_asciifolding_nostop": {
+          "tokenizer": "standard",
+          "filter": [
+            "asciifolding",
+            "lowercase",
+            "snowball"
+          ]
+        },
+        "standard_asciifolding_nostop": {
+          "tokenizer": "standard",
+          "filter": [
+            "asciifolding",
+            "lowercase"
+          ]
+        },
+        "keyword_asciifolding_lowercase": {
+          "tokenizer": "keyword",
+          "filter": [
+            "lowercase",
+            "asciifolding"
+          ]
+        },
+        "keyword_asciifolding_uppercase": {
+          "tokenizer": "keyword",
+          "filter": [
+            "uppercase",
+            "asciifolding"
+          ]
+        },
+        "keyword_lowercase": {
+          "tokenizer": "keyword",
+          "filter": [
+            "lowercase"
+          ]
+        },
+        "keyword_uppercase": {
+          "tokenizer": "keyword",
+          "filter": [
+            "uppercase"
+          ]
+        }
+      },
+      "filter": {
+      }
+    }
+  }
+}

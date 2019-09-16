@@ -1,0 +1,45 @@
+{
+  "query": {
+    "bool": {
+      "minimum_should_match": 1,
+      "should": [
+        {
+          "multi_match": {
+            "fields": [
+              "title",
+              "description"
+            ],
+            "operator": "and",
+            "query": "scuba in cuba and asia"
+          }
+        }
+      ],
+      "filter": {
+        "bool": {
+          "must": [
+            {
+              "query": {
+                "match": {
+                  "countries": {
+                    "operator": "and",
+                    "query": "canada"
+                  }
+                }
+              }
+            },
+            {
+              "query": {
+                "match": {
+                  "industries": {
+                    "operator": "and",
+                    "query": "fishing"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

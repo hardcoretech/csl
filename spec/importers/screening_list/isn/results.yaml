@@ -1,0 +1,53 @@
+---
+- :name: 150th Aircraft Repair Plant (ARZ) (Kaliningrad)
+  :federal_register_notice: Vol. 81, No. 128, 07/05/16
+  :start_date: '2016-06-28'
+  :remarks: 
+  :source_list_url: http://www.state.gov/t/isn/c15231.htm
+  :alt_names: 
+  :country: RU
+  :id: 66a593540d9afb462007a039dc4ba73bbf0306b8
+  :source: &1
+    :full_name: Nonproliferation Sanctions (ISN) - State Department
+    :code: ISN
+  :source_information_url: http://www.state.gov/t/isn/c15231.htm
+  :programs:
+  - INKSNA
+  :name_idx: 150th Aircraft Repair Plant ARZ Kaliningrad
+  :name_rev: Kaliningrad ARZ Plant Repair Aircraft 150th
+  :name_no_ws: 150thAircraftRepairPlantARZKaliningrad
+  :name_no_ws_rev: KaliningradARZPlantRepairAircraft150th
+- :name: Amir Hossein Rahimyar
+  :federal_register_notice: Vol. 78, No. 38, 02/26/13
+  :start_date: '2012-12-13'
+  :remarks: 
+  :source_list_url: http://www.state.gov/t/isn/c15231.htm
+  :alt_names: 
+  :country: IR
+  :id: f862fb370c69ed50a5448840cd5aafd3dbfef568
+  :source: *1
+  :source_information_url: http://www.state.gov/t/isn/c15231.htm
+  :programs:
+  - E.O. 13382
+  :name_idx: Amir Hossein Rahimyar
+  :name_rev: Rahimyar Hossein Amir
+  :name_no_ws: AmirHosseinRahimyar
+  :name_no_ws_rev: RahimyarHosseinAmir
+- :name: Abdul Qadeer Khan
+  :federal_register_notice: Vol. 74, No. 11, 01/16/09
+  :start_date: '2009-01-09'
+  :remarks: Associated with the A.Q. Khan Network
+  :source_list_url: http://www.state.gov/t/isn/c15231.htm
+  :alt_names: 
+  :country: PK
+  :id: 2d2db09c686e4829d0ef1b0b04145eec3d42cd88
+  :source: *1
+  :source_information_url: http://www.state.gov/t/isn/c15231.htm
+  :programs:
+  - E.O. 13382
+  - Export-Import Bank Act
+  - Nuclear Proliferation Prevention Act
+  :name_idx: Abdul Qadeer Khan
+  :name_rev: Khan Qadeer Abdul
+  :name_no_ws: AbdulQadeerKhan
+  :name_no_ws_rev: KhanQadeerAbdul

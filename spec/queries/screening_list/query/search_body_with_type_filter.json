@@ -1,0 +1,17 @@
+{
+  "query": {
+    "bool": {
+      "filter": {
+        "bool": {
+          "must": [
+            {
+              "term": {
+                "type": "entity"
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

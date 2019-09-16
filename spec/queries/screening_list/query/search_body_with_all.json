@@ -1,0 +1,81 @@
+{
+  "query": {
+    "bool": {
+      "filter": {
+        "bool": {
+          "must": [
+            {
+              "term": {
+                "type": "entity"
+              }
+            },
+            {
+              "terms": {
+                "source.code": [
+                  "SDN"
+                ]
+              }
+            }
+          ],
+          "minimum_should_match":1,
+          "should": [
+            {
+              "terms": {
+                "addresses.country": [
+                  "US",
+                  "CA"
+                ]
+              }
+            },
+            {
+              "terms": {
+                "ids.country": [
+                  "US",
+                  "CA"
+                ]
+              }
+            },
+            {
+              "terms": {
+                "nationalities": [
+                  "US",
+                  "CA"
+                ]
+              }
+            },
+            {
+              "terms": {
+                "citizenships": [
+                  "US",
+                  "CA"
+                ]
+              }
+            },
+            {
+              "terms": {
+                "country": [
+                  "US",
+                  "CA"
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "must": [
+        {
+          "multi_match": {
+            "fields": [
+              "alt_names",
+              "name",
+              "remarks",
+              "title"
+            ],
+            "operator": "and",
+            "query": "fish"
+          }
+        }
+      ]
+    }
+  }
+}
