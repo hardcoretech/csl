@@ -5,8 +5,8 @@ language: ruby
 rvm:
   - 2.6
 
-services:
-  - elasticsearch
+before_install:
+  - curl -O https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/7.1.1/elasticsearch-7.1.1.deb && sudo dpkg -i --force-confnew elasticsearch-7.1.1.deb && sudo service elasticsearch restart
 before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
