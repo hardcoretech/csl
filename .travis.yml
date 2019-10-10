@@ -1,0 +1,20 @@
+env:
+  global:
+    CC_TEST_REPORTER_ID=6d51c2d680d852d815f68c6468db1f28b4fcbe14ff575338d3d9ccb6e5705ecb
+language: ruby
+rvm:
+  - 2.6
+
+services:
+  - elasticsearch
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+  - sudo apt-get install -y libicu-dev
+
+script:
+  - bundle exec rubocop -DESP
+  - bundle exec rspec
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT

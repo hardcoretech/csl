@@ -1,3 +1,7 @@
+[![Maintainability](https://api.codeclimate.com/v1/badges/6e4ae79f2f1517785a7c/maintainability)](https://codeclimate.com/github/GovWizely/csl/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/6e4ae79f2f1517785a7c/test_coverage)](https://codeclimate.com/github/GovWizely/csl/test_coverage)
+[![Build Status](https://travis-ci.org/GovWizely/csl.svg?branch=master)](https://travis-ci.org/GovWizely/csl/)
+
 Consolidated Screening List (CSL)
 =================================
 
