@@ -11,7 +11,7 @@ gem "elasticsearch", github: "yasyf/elasticsearch-ruby", branch: "yasyf/fix_modi
 gem "elasticsearch-model"
 gem "elasticsearch-persistence"
 gem "jbuilder", "~> 2.5"
-gem "puma", "~> 3.11"
+gem "puma", "~> 4.3"
 gem "rails"
 gem "sanitize"
 gem "htmlentities"
