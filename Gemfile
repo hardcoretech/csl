@@ -7,7 +7,7 @@ ruby "~> 2.6"
 
 gem "active_elastic_job"
 gem "aws-sdk", "~> 2" # https://github.com/tawan/active-elastic-job/pull/95
-gem "elasticsearch", github: "yasyf/elasticsearch-ruby", branch: "yasyf/fix_modifying_frozen_string" # https://github.com/elastic/elasticsearch-ruby/pull/725
+gem "elasticsearch"
 gem "elasticsearch-model"
 gem "elasticsearch-persistence"
 gem "jbuilder", "~> 2.5"
