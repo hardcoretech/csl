@@ -14,26 +14,24 @@ describe "Consolidated Screening List API", type: :request do
       it_behaves_like "it contains all ScreeningList::Sdn results"
       it_behaves_like "it contains all ScreeningList::Fse results"
       it_behaves_like "it contains all ScreeningList::El results"
-      it_behaves_like "it contains all ScreeningList::Eo13599 results"
       it_behaves_like "it contains all ScreeningList::Dpl results"
       it_behaves_like "it contains all ScreeningList::Uvl results"
       it_behaves_like "it contains all ScreeningList::Isn results"
       it_behaves_like "it contains all ScreeningList::Dtc results"
-      it_behaves_like "it contains all ScreeningList::Part561 results"
       it_behaves_like "it contains all ScreeningList::Plc results"
       it_behaves_like "it contains all ScreeningList::Ssi results"
       it_behaves_like "it contains only results with sources" do
         let(:sources) do
-          [ScreeningList::Sdn, ScreeningList::Fse, ScreeningList::El, ScreeningList::Eo13599,
+          [ScreeningList::Sdn, ScreeningList::Fse, ScreeningList::El,
            ScreeningList::Dpl, ScreeningList::Uvl, ScreeningList::Isn,
-           ScreeningList::Dtc, ScreeningList::Part561, ScreeningList::Plc, ScreeningList::Ssi,]
+           ScreeningList::Dtc, ScreeningList::Plc, ScreeningList::Ssi,]
         end
       end
       it_behaves_like "it contains sources_used" do
         let(:sources) do
-          [ScreeningList::Sdn, ScreeningList::Fse, ScreeningList::El, ScreeningList::Eo13599,
+          [ScreeningList::Sdn, ScreeningList::Fse, ScreeningList::El,
            ScreeningList::Dpl, ScreeningList::Uvl, ScreeningList::Isn,
-           ScreeningList::Dtc, ScreeningList::Part561, ScreeningList::Plc, ScreeningList::Ssi,]
+           ScreeningList::Dtc, ScreeningList::Plc, ScreeningList::Ssi,]
         end
       end
     end
@@ -210,10 +208,8 @@ describe "Consolidated Screening List API", type: :request do
       it_behaves_like 'it contains all ScreeningList::Sdn results that match type "Entity"'
       it_behaves_like 'it contains all ScreeningList::Fse results that match type "Entity"'
       it_behaves_like 'it contains all ScreeningList::Ssi results that match type "Entity"'
-      it_behaves_like 'it contains all ScreeningList::Eo13599 results that match type "Entity"'
-      it_behaves_like 'it contains all ScreeningList::Part561 results that match type "Entity"'
       it_behaves_like "it contains only results with sources" do
-        let(:sources) { [ScreeningList::Sdn, ScreeningList::Fse, ScreeningList::Ssi, ScreeningList::Eo13599, ScreeningList::Part561] }
+        let(:sources) { [ScreeningList::Sdn, ScreeningList::Fse, ScreeningList::Ssi] }
       end
 
       context 'and is set to "Vessel"' do
@@ -245,70 +241,6 @@ describe "Consolidated Screening List API", type: :request do
         let(:sources) { [ScreeningList::Sdn] }
       end
       it_behaves_like "it contains all ScreeningList::Sdn results sorted by default"
-
-      context 'and is set to "Part561" source' do
-        let(:params) { { sources: "561" } }
-        it_behaves_like "it contains all ScreeningList::Part561 results"
-        it_behaves_like "it contains only results with sources" do
-          let(:sources) { [ScreeningList::Part561] }
-        end
-        it_behaves_like "it contains sources_used" do
-          let(:sources) { [ScreeningList::Part561] }
-        end
-
-        context "when q is specified" do
-          let(:params) { { sources: "561", q: "kunlun" } }
-          subject { response }
-          it_behaves_like "a successful search request"
-          it_behaves_like 'it contains all ScreeningList::Part561 results that match "kunlun"'
-        end
-
-        context "when countries is specified" do
-          let(:params) { { sources: "561", countries: "CN" } }
-          subject { response }
-          it_behaves_like "a successful search request"
-          it_behaves_like 'it contains all ScreeningList::Part561 results that match countries "CN"'
-        end
-
-        context "when type is specified" do
-          subject { response }
-          let(:params) { { sources: "561", type: "Entity" } }
-          it_behaves_like "a successful search request"
-          it_behaves_like 'it contains all ScreeningList::Part561 results that match type "Entity"'
-        end
-      end
-
-      context 'and is set to "Eo13599" source' do
-        let(:params) { { sources: "13599" } }
-        it_behaves_like "it contains all ScreeningList::Eo13599 results"
-        it_behaves_like "it contains only results with sources" do
-          let(:sources) { [ScreeningList::Eo13599] }
-        end
-        it_behaves_like "it contains sources_used" do
-          let(:sources) { [ScreeningList::Eo13599] }
-        end
-
-        context "when q is specified" do
-          let(:params) { { sources: "13599", q: "kuo" } }
-          subject { response }
-          it_behaves_like "a successful search request"
-          it_behaves_like 'it contains all ScreeningList::Eo13599 results that match "kuo"'
-        end
-
-        context "when countries is specified" do
-          let(:params) { { sources: "13599", countries: "AE" } }
-          subject { response }
-          it_behaves_like "a successful search request"
-          it_behaves_like 'it contains all ScreeningList::Eo13599 results that match countries "AE"'
-        end
-
-        context "when type is specified" do
-          subject { response }
-          let(:params) { { sources: "13599", type: "Entity" } }
-          it_behaves_like "a successful search request"
-          it_behaves_like 'it contains all ScreeningList::Eo13599 results that match type "Entity"'
-        end
-      end
 
       context 'and is set to "FSE" source' do
         let(:params) { { sources: "FSE" } }
