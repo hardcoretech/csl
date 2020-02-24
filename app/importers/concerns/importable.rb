@@ -29,7 +29,7 @@ module Importable
   end
 
   def remap_keys(mapping, article_hash)
-    Hash[article_hash.slice(*mapping.keys).map { |k, v| [mapping[k], v] }]
+    article_hash.slice(*mapping.keys).transform_keys { |k| mapping[k] }
   end
 
   def lookup_country(country_str)
@@ -73,7 +73,7 @@ module Importable
   end
 
   def extract_fields(parent_node, path_hash)
-    Hash[path_hash.map { |key, path| [key, extract_node(parent_node.xpath(path).first)] }]
+    path_hash.transform_values { |path| extract_node(parent_node.xpath(path).first) }
   end
 
   def extract_node(node)

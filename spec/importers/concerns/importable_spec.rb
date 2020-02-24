@@ -170,4 +170,11 @@ describe Importable do
       expect(m.last_imported.to_time).to be_within(60.seconds).of(Time.now)
     end
   end
+
+  describe "#remap_keys" do
+    subject { MockData.new.remap_keys(mapping, original_hash) }
+    let(:mapping) { { original_title: "new_title", original_body: "new_body" } }
+    let(:original_hash) { { original_title: "title", original_body: "body", other: "other" } }
+    it { is_expected.to eq("new_title" => "title", "new_body" => "body") }
+  end
 end
