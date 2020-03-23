@@ -44,7 +44,7 @@ describe ScreeningList::DplData do
         source_list_url: nil,
         source_information_url: nil,
         addresses: [{
-                      address: "", city: "Guaruja", state: "SP", country: "Brazil", postal_code: "1234",
+                      address: "", city: "Guaruja", state: "SP", country: "Brazil", postal_code: "1234", full_address: "Guaruja, SP, 1234, Brazil",
                     },],
       }
 
