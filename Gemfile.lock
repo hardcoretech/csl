@@ -88,15 +88,15 @@ GEM
       elasticsearch-transport (= 7.5.0)
     elasticsearch-api (7.5.0)
       multi_json
-    elasticsearch-model (7.0.0)
+    elasticsearch-model (7.1.0)
       activesupport (> 3)
       elasticsearch (> 1)
       hashie
-    elasticsearch-persistence (7.0.0)
+    elasticsearch-persistence (7.1.0)
       activemodel (> 4)
       activesupport (> 4)
       elasticsearch (~> 7)
-      elasticsearch-model (= 7.0.0)
+      elasticsearch-model (= 7.1.0)
       hashie
     elasticsearch-transport (7.5.0)
       faraday (>= 0.14, < 1)
@@ -108,7 +108,7 @@ GEM
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     hashdiff (1.0.1)
-    hashie (4.0.0)
+    hashie (4.1.0)
     htmlentities (4.3.4)
     i18n (1.8.2)
       concurrent-ruby (~> 1.0)
