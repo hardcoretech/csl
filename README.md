@@ -1,7 +1,7 @@
-[![Maintainability](https://api.codeclimate.com/v1/badges/6e4ae79f2f1517785a7c/maintainability)](https://codeclimate.com/github/GovWizely/csl/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/6e4ae79f2f1517785a7c/test_coverage)](https://codeclimate.com/github/GovWizely/csl/test_coverage)
-[![Build Status](https://travis-ci.org/GovWizely/csl.svg?branch=master)](https://travis-ci.org/GovWizely/csl/)
-[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=GovWizely/csl)](https://dependabot.com)
+[![Maintainability](https://api.codeclimate.com/v1/badges/cd273939d4dc7f269b0f/maintainability)](https://codeclimate.com/github/InternationalTradeAdministration/csl/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/cd273939d4dc7f269b0f/test_coverage)](https://codeclimate.com/github/InternationalTradeAdministration/csl/test_coverage)
+[![Build Status](https://travis-ci.org/InternationalTradeAdministration/csl.svg?branch=master)](https://travis-ci.org/InternationalTradeAdministration/csl/)
+[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=InternationalTradeAdministration/csl)](https://dependabot.com)
 
 Consolidated Screening List (CSL)
 =================================
@@ -147,4 +147,4 @@ Once you have deployed CSL to Beanstalk (via Zip file, S3, etc), the various ind
 
 ### Provenance
 
-The CSL code was originally part of [this repository](https://github.com/GovWizely/webservices), which was decomposed into multiple repositories and deprecated.
+The CSL code was originally part of [this repository](https://github.com/InternationalTradeAdministration/webservices), which was decomposed into multiple repositories and deprecated.
