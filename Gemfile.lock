@@ -63,13 +63,13 @@ GEM
       public_suffix (>= 2.0.2, < 5.0)
     ast (2.4.0)
     aws-eventstream (1.1.0)
-    aws-sdk (2.11.493)
-      aws-sdk-resources (= 2.11.493)
-    aws-sdk-core (2.11.493)
+    aws-sdk (2.11.494)
+      aws-sdk-resources (= 2.11.494)
+    aws-sdk-core (2.11.494)
       aws-sigv4 (~> 1.0)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.11.493)
-      aws-sdk-core (= 2.11.493)
+    aws-sdk-resources (2.11.494)
+      aws-sdk-core (= 2.11.494)
     aws-sigv4 (1.1.2)
       aws-eventstream (~> 1.0, >= 1.0.2)
     bootsnap (1.4.6)
@@ -104,7 +104,7 @@ GEM
     erubi (1.9.0)
     faraday (1.0.1)
       multipart-post (>= 1.2, < 3)
-    ffi (1.11.3)
+    ffi (1.12.2)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     hashdiff (1.0.1)
@@ -138,12 +138,12 @@ GEM
     nio4r (2.5.2)
     nokogiri (1.10.9)
       mini_portile2 (~> 2.4.0)
-    nokogumbo (2.0.1)
+    nokogumbo (2.0.2)
       nokogiri (~> 1.8, >= 1.8.4)
     parallel (1.19.1)
     parser (2.7.1.1)
       ast (~> 2.4.0)
-    public_suffix (4.0.3)
+    public_suffix (4.0.4)
     puma (4.3.3)
       nio4r (~> 2.0)
     rack (2.2.2)
@@ -178,7 +178,7 @@ GEM
     rainbow (3.0.0)
     rake (13.0.1)
     rb-fsevent (0.10.3)
-    rb-inotify (0.10.0)
+    rb-inotify (0.10.1)
       ffi (~> 1.0)
     rexml (3.2.4)
     rspec-core (3.9.1)
@@ -228,7 +228,7 @@ GEM
     simplecov (0.18.5)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
-    simplecov-html (0.12.1)
+    simplecov-html (0.12.2)
     spring (2.1.0)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
@@ -282,7 +282,7 @@ DEPENDENCIES
   webmock
 
 RUBY VERSION
-   ruby 2.6.4p104
+   ruby 2.7.1p83
 
 BUNDLED WITH
-   1.17.3
+   2.1.4

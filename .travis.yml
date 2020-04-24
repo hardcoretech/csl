@@ -3,7 +3,7 @@ env:
     CC_TEST_REPORTER_ID=78f938ee66a0c73b4691bf599b59fe628bd6632f00035421efca9c0573d27e13
 language: ruby
 rvm:
-  - 2.6
+  - 2.7
 
 before_install:
   - curl -s -O https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.1.1-amd64.deb

@@ -15,7 +15,11 @@ The Consolidated Screening List (CSL) is a list of parties for which the United 
 
 ### Ruby
 
-This repository has been tested against [Ruby 2.6](http://www.ruby-lang.org/en/downloads/).
+This repository has been tested against [Ruby 2.7](http://www.ruby-lang.org/en/downloads/). Most of the gem
+ dependencies are being updated to fix the deprecations from Ruby 2.7. If you don't wish to see these deprecation
+  warnings from Ruby when you run console or the test suite, set this environment variable:
+  
+    RUBYOPT=-W:no-deprecated
 
 ### Gems
 
@@ -26,7 +30,7 @@ Install bundler and other required gems:
     
 The `charlock_holmes` gem requires the UCI libraries to be installed. If you are using Homebrew, it's probably as simple as this:
      
-     brew install icu4c
+    brew install icu4c
 
 More information about the gem can be found [here](https://github.com/brianmario/charlock_holmes)             
 

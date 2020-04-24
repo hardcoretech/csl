@@ -3,7 +3,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "~> 2.6"
+ruby "~> 2.7"
 
 gem "active_elastic_job"
 gem "aws-sdk", "~> 2" # https://github.com/tawan/active-elastic-job/pull/95
