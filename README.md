@@ -32,7 +32,7 @@ More information about the gem can be found [here](https://github.com/brianmario
 
 ### ElasticSearch
 
-CSL uses [Elasticsearch](http://www.elasticsearch.org/) ~= 7.1 for fulltext search. On a Mac, it's easy to
+CSL uses [Elasticsearch](http://www.elasticsearch.org/) ~= 7.4 for fulltext search. On a Mac, it's easy to
  install with [Homebrew](http://mxcl.github.com/homebrew/).
 
     brew install elasticsearch
@@ -41,7 +41,7 @@ Otherwise, follow the [instructions](http://www.elasticsearch.org/download/) to 
 
 You can also run it via Docker:
 
-    docker run -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:7.1.1
+    docker run -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:7.4.2
 
 
 ### Running CSL locally
