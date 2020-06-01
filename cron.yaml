@@ -1,5 +1,8 @@
 version: 1
 cron:
+  - name: "CapImportJob"
+    url: "/periodic_tasks"
+    schedule: "*/30 * * * *"
   - name: "DplImportJob"
     url: "/periodic_tasks"
     schedule: "*/30 * * * *"
