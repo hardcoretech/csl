@@ -23,7 +23,7 @@ module ScreeningList
 
     include ScreeningList::MakeNameVariants
 
-    ENDPOINT = "https://mbcsanctions.t.state.gov/sanctions.csv"
+    ENDPOINT = "https://ita-isn-data.s3.amazonaws.com/sanctions.csv"
 
     COLUMN_HASH = {
       name:                    :name,
