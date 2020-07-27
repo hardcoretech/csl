@@ -56,9 +56,9 @@ Fire up a web server to host the JSON API:
     
 Import data for a few sources:
 
-    bundle exec rake ita:import[ScreeningList::DplData]
-    bundle exec rake ita:import[ScreeningList::DtcData]
-    bundle exec rake ita:import[ScreeningList::SdnData]
+    bundle exec rake ita:import_synchronously[ScreeningList::DplData]
+    bundle exec rake ita:import_synchronously[ScreeningList::DtcData]
+    bundle exec rake ita:import_synchronously[ScreeningList::SdnData]
     
 See `app/importers/screening_list/*_data.rb` for a complete list.
 
