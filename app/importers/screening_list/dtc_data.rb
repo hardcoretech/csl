@@ -10,8 +10,8 @@ module ScreeningList
     include ::CanEnsureCsvHeaders
     self.expected_csv_headers = %i(
       corrected_notice corrected_notice_date
-      date_of_birth debarred_party_full_name_and_alias
-      notice notice_date)
+      date_of_birth federal_register_notice
+      notice_date party_name )
 
     # We don't group source entries in this importer, but we want
     # to use the generate_id method brought in by this module.
@@ -20,11 +20,6 @@ module ScreeningList
 
     include ScreeningList::MakeNameVariants
 
-    # We are turning off SSL verification for this importer temporarily
-    # because the server is not currently (04/08/20) configured correctly,
-    # the certificate chain is incomplete. We've communicated with the data provider
-    # to correct this issue but they haven't fixed it yet.
-    OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
     ENDPOINT = "https://www.pmddtc.state.gov/sys_attachment.do?sys_id=d351dbfb1bddd8102b6ca932f54bcb14"
 
     def import
@@ -45,7 +40,7 @@ module ScreeningList
         doc = {
           name:                    extract_name(row),
           alt_names:               extract_alt_names(row),
-          federal_register_notice: (row[:corrected_notice] || row[:notice]),
+          federal_register_notice: (row[:corrected_notice] || row[:federal_register_notice]),
           source:                  model_class.source,
           source_information_url:  @source_information_url,
         }
@@ -57,9 +52,8 @@ module ScreeningList
         doc[:id] = generate_id(doc)
         sanitize_entry(doc)
       end
-
       def extract_name(row)
-        name = row[:debarred_party_full_name_and_alias]
+        name = row[:party_name]
         if name.include? "Inc."
           name
         else
@@ -68,7 +62,7 @@ module ScreeningList
       end
 
       def extract_alt_names(row)
-        name = row[:debarred_party_full_name_and_alias]
+        name = row[:party_name]
         if name.include? "a.k.a."
           name.sub(/.*(\(a.*\))/, '\1').sub("(a.k.a. ", "").sub(")", "").split("; ")
         else
