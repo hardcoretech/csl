@@ -168,7 +168,7 @@ class Query
   end
 
   def valid_date_range?(range)
-    match = /^(\d{4}(?:\-\d{2}\-\d{2})?) TO (\d{4}(?:\-\d{2}\-\d{2})?)$/.match(range)
+    match = /^(\d{4}(?:-\d{2}-\d{2})?) TO (\d{4}(?:-\d{2}-\d{2})?)$/.match(range)
     raise Exceptions::InvalidDateRangeFormat if match.nil?
     [match[1], match[2]].each { |date| /^\d{4}$/.match(date) || Date.parse(date) }
     true

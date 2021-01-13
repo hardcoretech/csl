@@ -118,7 +118,7 @@ module ScreeningList
 
         hash[:country] &&= lookup_country(hash[:country].squish)
 
-        full_address_keys  = %i(address1 address2 address3 city country postal_code state)
+        full_address_keys = %i(address1 address2 address3 city country postal_code state)
         full_address = make_addr(hash, full_address_keys)
         hash[:full_address] = full_address.present? ? full_address : nil
 
