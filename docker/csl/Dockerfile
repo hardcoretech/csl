@@ -13,6 +13,8 @@ ENV ELASTICSEARCH_URL="elastic:9200"
 
 COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
+COPY import.sh /usr/bin/
+RUN chmod +x /usr/bin/import.sh
 COPY wait-for-it.sh /usr/bin/
 RUN chmod +x /usr/bin/wait-for-it.sh
 EXPOSE 3000

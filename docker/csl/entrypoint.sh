@@ -4,6 +4,6 @@
 
 bundle exec rake db:create
 
-bundle exec rake ita:import_synchronously[ScreeningList::SdnData]
+/usr/bin/import.sh
 
 bundle exec rails s -b 0.0.0.0
