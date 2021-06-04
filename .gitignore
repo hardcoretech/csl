@@ -27,3 +27,6 @@ spec/fixtures/.DS_Store
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+
+# Elasticsearch data
+es_data
