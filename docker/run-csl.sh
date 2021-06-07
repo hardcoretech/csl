@@ -26,6 +26,6 @@ mkdir -p es_data
 docker-compose -f docker-compose.yml build
 
 # ========================================================================
-# Run FMS
+# Run CSL
 # ========================================================================
 docker-compose -f docker-compose.yml up -d
