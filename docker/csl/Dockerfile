@@ -17,6 +17,7 @@ COPY import.sh /usr/bin/
 RUN chmod +x /usr/bin/import.sh
 COPY wait-for-it.sh /usr/bin/
 RUN chmod +x /usr/bin/wait-for-it.sh
+COPY development.rb /csl/config/environments/
 EXPOSE 3000
 
 CMD ["/usr/bin/entrypoint.sh"]
