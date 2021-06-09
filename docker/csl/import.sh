@@ -1,15 +1,27 @@
-echo "CSL server start import source list"
+#!/bin/bash
 
-bundle exec rake ita:import_synchronously[ScreeningList::CapData] 
-bundle exec rake ita:import_synchronously[ScreeningList::DplData]
-bundle exec rake ita:import_synchronously[ScreeningList::DtcData]
-bundle exec rake ita:import_synchronously[ScreeningList::ElData]
-bundle exec rake ita:import_synchronously[ScreeningList::FseData]
-bundle exec rake ita:import_synchronously[ScreeningList::IsnData]
-bundle exec rake ita:import_synchronously[ScreeningList::MeuData]
-bundle exec rake ita:import_synchronously[ScreeningList::PlcData]
-bundle exec rake ita:import_synchronously[ScreeningList::SdnData]
-bundle exec rake ita:import_synchronously[ScreeningList::SsiData]
-bundle exec rake ita:import_synchronously[ScreeningList::UvlData]
+echo "********** CSL server - Start import source list **********"
 
-echo "CSL server finish import source list"
+## define source name array ##
+souces=(
+    "CapData"
+    "DplData"
+    "DtcData"
+    "ElData"
+    "FseData"
+    "IsnData"
+    "MeuData"
+    "PlcData"
+    "SdnData"
+    "SsiData"
+    "UvlData"
+)
+ 
+## get item count using ${arrayname[@]} ##
+for source in "${souces[@]}"
+do
+  echo "********** Import $source **********"
+  bundle exec rake ita:import_synchronously[ScreeningList::$source]
+done
+
+echo "********** CSL server - Finish import source list **********"
