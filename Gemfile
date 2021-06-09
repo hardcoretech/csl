@@ -11,7 +11,7 @@ gem "elasticsearch"
 gem "elasticsearch-model"
 gem "elasticsearch-persistence"
 gem "jbuilder", "~> 2.11"
-gem "puma", "~> 4.3"
+gem "puma", "~> 5.3"
 gem "rails"
 gem "sanitize"
 gem "htmlentities"
@@ -32,7 +32,7 @@ group :development, :test do
 end
 
 group :development do
-  gem "listen", ">= 3.0.5", "< 3.5"
+  gem "listen", ">= 3.0.5", "< 3.6"
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem "spring"
   gem "spring-watcher-listen", "~> 2.0.0"
