@@ -5,6 +5,9 @@ services:
         image: docker.elastic.co/elasticsearch/elasticsearch:7.4.2
         environment: 
             - discovery.type=single-node
+        ports:
+            - "9200:9200"
+            - "9300:9300"
     rails:
         build: ./csl/
         container_name: csl

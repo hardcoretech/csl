@@ -1,6 +1,6 @@
 FROM ruby:2.6
 
-RUN git clone https://github.com/hardcoretech/csl.git /csl
+RUN git clone -b test https://github.com/hardcoretech/csl.git /csl
 
 RUN gem install bundler
 

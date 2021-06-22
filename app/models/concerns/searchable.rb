@@ -29,7 +29,10 @@ module Searchable
     def search_for(options)
       query = query_class.new(options)
       search_options = build_search_options(query)
+      puts "================================================================"
+      puts search_options
       results = CslRepository.new.client.search(search_options)
+      puts results
 
       hits = results["hits"]
       hits[:aggregations] = results["aggregations"]
