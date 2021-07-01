@@ -6,7 +6,9 @@ services:
         environment: 
             - discovery.type=single-node
     rails:
-        build: ./csl/
+        build:
+            context: ./../
+            dockerfile: $PWD/csl/Dockerfile
         container_name: csl
         environment:
             - RECREATE_DB=true

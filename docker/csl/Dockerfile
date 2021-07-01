@@ -1,23 +1,21 @@
 FROM ruby:2.6
 
-RUN git clone https://github.com/hardcoretech/csl.git /csl
-
 RUN gem install bundler
 
 WORKDIR /csl
-COPY Gemfile /csl/
+COPY . /csl/
 
 RUN bundle install
 
 ENV ELASTICSEARCH_URL="elastic:9200"
 
-COPY entrypoint.sh /usr/bin/
+COPY ./docker/csl/entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
-COPY import.sh /usr/bin/
+COPY ./docker/csl/import.sh /usr/bin/
 RUN chmod +x /usr/bin/import.sh
-COPY wait-for-it.sh /usr/bin/
+COPY ./docker/csl/wait-for-it.sh /usr/bin/
 RUN chmod +x /usr/bin/wait-for-it.sh
-COPY development.rb /csl/config/environments/
+COPY ./docker/csl/development.rb /csl/config/environments/
 EXPOSE 3000
 
 CMD ["/usr/bin/entrypoint.sh"]
