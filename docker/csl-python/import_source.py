@@ -21,7 +21,7 @@ def make_names(doc):
     doc['name_idx'] = filter_alnum_and_space(doc['name'])
     doc['name_idx'] = remove_words(doc['name_idx'], STOPWORDS)
 
-    if not has_any_common_words(doc['name_idx']):
+    if has_any_common_words(doc['name_idx']):
         make_names_with_common(doc, 'name')
 
     doc['name_rev'] = name_rev(doc['name'])
@@ -38,7 +38,7 @@ def make_alt_names(doc):
     doc['alt_idx'] = [filter_alnum_and_space(n) for n in doc['alt_names']]
     doc['alt_idx'] = [remove_words(n, STOPWORDS) for n in doc['alt_idx']]
 
-    if not has_any_common_words(' '.join(doc['alt_idx'])):
+    if has_any_common_words(' '.join(doc['alt_idx'])):
         make_alt_names_with_common(doc)
 
     doc['alt_rev'] = [name_rev(n) for n in doc['alt_idx']]
@@ -187,10 +187,10 @@ if __name__ == '__main__':
             if not es.ping():
                 raise ConnectionError
 
-            data = get_json_data('https://api.trade.gov/static/consolidated_screening_list/consolidated.json')
+            json_data = get_json_data('https://api.trade.gov/static/consolidated_screening_list/consolidated.json')
 
             for importer in source_importers:
-                importer.do_import(data)
+                importer.do_import(json_data)
 
             logger.info('Finish import CSL source')
         except ConnectionError:
