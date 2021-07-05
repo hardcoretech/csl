@@ -13,7 +13,8 @@ module ScreeningList
                           ScreeningList::Plc,
                           ScreeningList::Sdn,
                           ScreeningList::Ssi,
-                          ScreeningList::Uvl,]
+                          ScreeningList::Uvl,
+                          ScreeningList::Mbs,]
     self.fetch_all_sort_by = "name.keyword"
 
     include SeparatedValuesable

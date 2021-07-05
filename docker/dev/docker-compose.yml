@@ -7,12 +7,17 @@ services:
             - discovery.type=single-node
     rails:
         build:
-            context: ./../
-            dockerfile: $PWD/csl/Dockerfile
+            context: ./../../
+            dockerfile: $PWD/../csl/Dockerfile
         container_name: csl
         environment:
             - RECREATE_DB=true
         ports:
             - "3000:3000"
+        depends_on:
+            - elastic
+    python:
+        build: ./../csl-python/
+        container_name: csl-python
         depends_on:
             - elastic

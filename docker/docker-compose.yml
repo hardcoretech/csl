@@ -17,6 +17,11 @@ services:
             - RECREATE_DB=true
         depends_on:
             - elastic
+    python:
+        build: ./csl-python/
+        container_name: csl-python
+        depends_on:
+            - elastic
     csl-proxy:
         build: ./nginx/
         container_name: csl-proxy
