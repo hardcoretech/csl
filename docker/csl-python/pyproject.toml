@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "csl-python"
+version = "0.1.0"
+description = ""
+authors = ["GoFreight"]
+readme = "README.md"
+packages = [{include = "csl_python"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+certifi = "*"
+chardet = "^4"
+elasticsearch = "7.13.1"
+idna = "^2"
+requests = "^2"
+urllib3 = "^1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

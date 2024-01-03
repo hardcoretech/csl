@@ -2,6 +2,7 @@
 
 /usr/bin/wait-for-it.sh elastic:9200 -t 30  -- echo "Elasticsearch server is ready"
 
+# DB Migration
 if [ "$RECREATE_DB" = "true" ] ; then
     bundle exec rake db:create
     /usr/bin/import.sh

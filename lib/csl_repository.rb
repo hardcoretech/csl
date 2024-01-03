@@ -137,7 +137,10 @@ class CslRepository < BaseRepository
                 expiration_date: {
                   type: "date",
                   format: "yyyy-MM-dd"
-                }
+                },
+                number: {
+                  type: "keyword"
+                },
               }
       indexes :nationalities,
               type: "keyword"
@@ -157,7 +160,7 @@ class CslRepository < BaseRepository
               type: "integer"
       indexes :_updated_at,
               type: "date",
-              format: "strictDateOptionalTime"
+              format: "strict_date_optional_time"
     end
   end
 end

@@ -6,17 +6,17 @@ echo "********** CSL server - Start import source list **********"
 souces=(
     "CapData"
     "DplData"
-    "DtcData"
+    # "DtcData"
     "ElData"
     "FseData"
-    "IsnData"
+    # "IsnData"
     "MeuData"
     "PlcData"
     "SdnData"
     "SsiData"
     "UvlData"
 )
- 
+
 ## get item count using ${arrayname[@]} ##
 for source in "${souces[@]}"
 do

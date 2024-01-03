@@ -1,0 +1,14 @@
+Dockerfile
+docker-compose.yml
+
+deployment/
+
+.venv
+pyproject.toml
+README.md
+requirements.txt
+**/__pycache__
+**/*.py[cod]
+
+vendor
+tmp

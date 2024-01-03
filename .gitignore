@@ -30,3 +30,5 @@ spec/fixtures/.DS_Store
 
 # Elasticsearch data
 es_data
+
+vendor/

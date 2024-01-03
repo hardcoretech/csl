@@ -3,14 +3,17 @@ import os
 import re
 import time
 import traceback
-from logging.handlers import WatchedFileHandler
+from datetime import datetime
 
 import requests
 from elasticsearch import Elasticsearch
 from elasticsearch.exceptions import ConnectionError
 
+import warnings
+from elasticsearch.exceptions import ElasticsearchWarning
+warnings.simplefilter('ignore', ElasticsearchWarning)
 
-STOPWORDS = {'and', 'the', 'los'}
+STOP_WORDS = {'and', 'the', 'los'}
 COMMON_WORDS = {
     'co', 'company', 'corp', 'corporation', 'inc', 'incorporated', 'limited', 'ltd', 'mr', 'mrs', 'ms',
     'organization', 'sa', 'sas', 'llc', 'university', 'univ'
@@ -19,7 +22,7 @@ COMMON_WORDS = {
 
 def make_names(doc):
     doc['name_idx'] = filter_alnum_and_space(doc['name'])
-    doc['name_idx'] = remove_words(doc['name_idx'], STOPWORDS)
+    doc['name_idx'] = remove_words(doc['name_idx'], STOP_WORDS)
 
     if has_any_common_words(doc['name_idx']):
         make_names_with_common(doc, 'name')
@@ -36,7 +39,7 @@ def make_names(doc):
 
 def make_alt_names(doc):
     doc['alt_idx'] = [filter_alnum_and_space(n) for n in doc['alt_names']]
-    doc['alt_idx'] = [remove_words(n, STOPWORDS) for n in doc['alt_idx']]
+    doc['alt_idx'] = [remove_words(n, STOP_WORDS) for n in doc['alt_idx']]
 
     if has_any_common_words(' '.join(doc['alt_idx'])):
         make_alt_names_with_common(doc)
@@ -112,11 +115,6 @@ steam_handler = logging.StreamHandler()
 steam_handler.setLevel(logging.INFO)
 logger.addHandler(steam_handler)
 
-file_handler = WatchedFileHandler('/var/log/csl.log')
-file_handler.setLevel(logging.INFO)
-logger.addHandler(file_handler)
-
-
 class BaseImporter:
     ES_INDEX_NAME = None
     SOURCE_NAME = None
@@ -137,7 +135,7 @@ class BaseImporter:
             doc = make_full_addresses(doc)
             doc = make_source_object(self.SOURCE_NAME, doc)
 
-            self._es.index(index=self.ES_INDEX_NAME, body=doc, id=doc_id)
+            self._es.index(index=self.ES_INDEX_NAME, document=doc, id=doc_id)
             _count += 1
 
         es.indices.refresh(index=self.ES_INDEX_NAME)
@@ -175,27 +173,25 @@ def is_isn_source(doc) -> bool:
 
 
 if __name__ == '__main__':
-    hosts = os.getenv('ELASTICSEARCH_HOST', 'localhost')
-    port = os.environ.get('ELASTICSEARCH_PORT', 9200)
-    es = Elasticsearch(hosts=hosts, port=port)
+
+    es_url = os.environ.get('ELASTICSEARCH_URL', 'http://127.0.0.1:9200')
+
+    es = Elasticsearch(hosts=es_url)
 
     source_importers = [importer_cls(es) for importer_cls in SOURCE_IMPORTER_CLASSES]
 
-    while True:
-        logger.info('Start import CSL source')
-        try:
-            if not es.ping():
-                raise ConnectionError
+    logger.info('Start import CSL source: ' + datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+    try:
+        if not es.ping():
+            raise ConnectionError
 
-            json_data = get_json_data('https://api.trade.gov/static/consolidated_screening_list/consolidated.json')
+        json_data = get_json_data('https://api.trade.gov/static/consolidated_screening_list/consolidated.json')
 
-            for importer in source_importers:
-                importer.do_import(json_data)
+        for importer in source_importers:
+            importer.do_import(json_data)
 
-            logger.info('Finish import CSL source')
-        except ConnectionError:
-            logger.error('Connect ES server failed')
-        except Exception as e:
+        logger.info('Finish import CSL source: ' + datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+    except ConnectionError:
+        logger.error('Connect ES server failed')
+    except Exception as e:
             logger.error(f'Import CSL source failed: {e}, {traceback.format_exc()}')
-
-        time.sleep(1800)

@@ -9,7 +9,7 @@ gem "active_elastic_job"
 gem "aws-sdk", "~> 2" # https://github.com/tawan/active-elastic-job/pull/95
 gem "elasticsearch"
 gem "elasticsearch-model"
-gem "elasticsearch-persistence"
+gem "elasticsearch-persistence", "~> 7.0"
 gem "jbuilder", "~> 2.11"
 gem "puma", "~> 5.3"
 gem "rails"
@@ -17,6 +17,7 @@ gem "sanitize"
 gem "htmlentities"
 gem "charlock_holmes"
 gem "iso_country_codes"
+gem "public_suffix"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", ">= 1.4.2", require: false
