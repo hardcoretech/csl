@@ -1,0 +1,60 @@
+{{- range $celery := .Values.celeries }}
+
+{{- if $celery.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $.Release.Name }}-{{ $celery.name }}
+  labels:
+    {{- include "project.labels" $ | nindent 4 }}
+spec:
+  revisionHistoryLimit: 2
+  {{- if not $celery.scaledObject.enabled }}
+  replicas: {{ $celery.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "project.selectorLabels" $ | nindent 6 }}
+      app.kubernetes.io/component: {{ $celery.name }}
+  template:
+    metadata:
+      {{- with $celery.annotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "project.selectorLabels" $ | nindent 8 }}
+        app.kubernetes.io/component: {{ $celery.name }}
+    spec:
+      securityContext:
+        {{- toYaml $celery.podSecurityContext | nindent 8 }}
+      nodeSelector:
+        {{- toYaml $celery.nodeSelector | nindent 8 }}
+      containers:
+        - name: {{ $celery.name }}
+          securityContext:
+            {{- toYaml $celery.containerSecurityContext | nindent 12 }}
+          image: "{{ $.Values.image.repository }}:{{ $.Values.image.tag }}"
+          imagePullPolicy: {{ $.Values.image.pullPolicy }}
+          command:
+            {{- toYaml $celery.command | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ $.Release.Name }}-env
+          resources:
+            {{- toYaml $celery.resources | nindent 12 }}
+
+          {{- if $celery.startupProbe }}
+          startupProbe:
+            {{- toYaml $celery.startupProbe | nindent 12 }}
+          {{- end }}
+          {{- if $celery.readinessProbe }}
+          readinessProbe:
+            {{- toYaml $celery.readinessProbe | nindent 12 }}
+          {{- end }}
+          {{- if $celery.livenessProbe }}
+          livenessProbe:
+            {{- toYaml $celery.livenessProbe | nindent 12 }}
+          {{- end }}
+{{- end }}
+{{- end }}

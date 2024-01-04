@@ -1,0 +1,24 @@
+name: Release for Staging
+
+on:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  ci:
+    uses: ./.github/workflows/ci.yml
+    secrets:
+      HC_GITHUB_SSH_KEY: ${{ secrets.HC_GITHUB_SSH_KEY }}
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_GENERAL_CI_WEBHOOK_URL }}
+    with:
+      should_push_image: true
+
+  deploy-staging:
+    needs: ci
+    uses: ./.github/workflows/update-image-tag.yml
+    secrets:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_GENERAL_CI_WEBHOOK_URL }}
+    with:
+      commit_sha: ${{ github.sha }}
+      image_tag: ${{ needs.ci.outputs.app_version }}

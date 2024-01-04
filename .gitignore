@@ -31,4 +31,8 @@ spec/fixtures/.DS_Store
 # Elasticsearch data
 es_data
 
+# Rails
 vendor/
+
+# Python virtualenv
+.venv

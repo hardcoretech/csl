@@ -9,14 +9,14 @@
   :vessel_owner:
   :remarks: 'For more information on directives, please visit the following link: http://www.treasury.gov/resource-center/sanctions/Programs/Pages/ukraine.aspx#directives.'
   :id: '17013'
-  :source: 
+  :source:
     :full_name: Sectoral Sanctions Identifications List (SSI) - Treasury Department
     :code: SSI
   :source_list_url:
   :source_information_url: https://www.treasury.gov/resource-center/sanctions/SDN-List/Pages/ssi_list.aspx
   :name: VTB BANK OAO
   :type: Entity
-  :alt_names: 
+  :alt_names:
   - JSC VTB BANK
   - BANK VTB, OPEN JOINT-STOCK COMPANY
   - VNESHTORGBANK
@@ -27,13 +27,13 @@
   - VNESHTORGBANK ROSSII, CLOSED JOINT-STOCK COMPANY
   - VTB BANK, OPEN JOINT-STOCK COMPANY
   - BANK VTB OAO
-  :programs: 
+  :programs:
   - UKRAINE-EO13662
   :nationalities: []
   :citizenships: []
   :dates_of_birth: []
   :places_of_birth: []
-  :addresses: 
+  :addresses:
   - :city: St. Petersburg
     :country: RU
     :postal_code: '190000'
@@ -52,7 +52,7 @@
     :state:
     :address: 43, Vorontsovskaya str.
     :full_address: 43, Vorontsovskaya str., Moscow, RU, 109044
-  :ids: 
+  :ids:
   - :country: RU
     :expiration_date:
     :issue_date:
@@ -175,16 +175,16 @@
   :source_information_url: https://www.treasury.gov/resource-center/sanctions/SDN-List/Pages/ssi_list.aspx
   :name: BANK OF MOSCOW
   :type: Entity
-  :alt_names: 
+  :alt_names:
   - JOINT STOCK COMMERCIAL BANK - BANK OF MOSCOW, OPEN JOINT STOCK COMPANY
   - AKTSIONERNY KOMMERCHESKI BANK BANK MOSKVY, OTKRYTOE AKTSIONERNOE OBSCHCHESTVO
-  :programs: 
+  :programs:
   - UKRAINE-EO13662
   :nationalities: []
   :citizenships: []
   :dates_of_birth: []
   :places_of_birth: []
-  :addresses: 
+  :addresses:
   - :city: Moscow
     :country: RU
     :postal_code: '107996'
@@ -197,7 +197,7 @@
     :state:
     :address: Bld 3 8/15, Rozhdestvenka St.
     :full_address: Bld 3 8/15, Rozhdestvenka St., Moscow, RU, 107996
-  :ids: 
+  :ids:
   - :country:
     :expiration_date:
     :issue_date:
@@ -270,27 +270,27 @@
   :vessel_owner:
   :remarks: 'For more information on directives, please visit the following link: http://www.treasury.gov/resource-center/sanctions/Programs/Pages/ukraine.aspx#directives.'
   :id: '17254'
-  :source: 
+  :source:
     :full_name: Sectoral Sanctions Identifications List (SSI) - Treasury Department
     :code: SSI
   :source_list_url:
   :source_information_url: https://www.treasury.gov/resource-center/sanctions/SDN-List/Pages/ssi_list.aspx
   :name: AK TRANSNEFT OAO
   :type: Entity
-  :alt_names: 
+  :alt_names:
   - OAO AK TRANSNEFT
   - AKTSIONERNAYA KOMPANIYA PO TRANSPORTUNEFTI TRANSNEFT OAO
   - OIL TRANSPORTING JOINT-STOCK COMPANY TRANSNEFT
   - TRANSNEFT, JSC
   - TRANSNEFT OJSC
   - TRANSNEFT
-  :programs: 
+  :programs:
   - UKRAINE-EO13662
   :nationalities: []
   :citizenships: []
   :dates_of_birth: []
   :places_of_birth: []
-  :addresses: 
+  :addresses:
   - :city: Moscow
     :country: RU
     :postal_code: '119180'
@@ -390,14 +390,14 @@
   :vessel_owner:
   :remarks: 'For more information on directives, please visit the following link: http://www.treasury.gov/resource-center/sanctions/Programs/Pages/ukraine.aspx#directives.'
   :id: '17260'
-  :source: 
+  :source:
     :full_name: Sectoral Sanctions Identifications List (SSI) - Treasury Department
     :code: SSI
   :source_list_url:
   :source_information_url: https://www.treasury.gov/resource-center/sanctions/SDN-List/Pages/ssi_list.aspx
   :name: ROSTEC
   :type: Entity
-  :alt_names: 
+  :alt_names:
   - STATE CORPORATION FOR ASSISTANCE TO DEVELOPMENT, PRODUCTION AND EXPORT OF ADVANCED TECHNOLOGY INDUSTRIAL PRODUCT ROSTEKHNOLOGII
   - STATE CORPORATION ROSTEKHNOLOGII
   - ROSTEC STATE CORPORATION
@@ -410,7 +410,7 @@
   :citizenships: []
   :dates_of_birth: []
   :places_of_birth: []
-  :addresses: 
+  :addresses:
   - :city: Moscow
     :country: RU
     :postal_code: '119048'
@@ -423,7 +423,7 @@
     :state:
     :address: 21 Gogolevsky Blvd.
     :full_address: 21 Gogolevsky Blvd., Moscow, RU, 119991
-  :ids: 
+  :ids:
   - :country: RU
     :expiration_date:
     :issue_date:

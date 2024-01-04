@@ -1,0 +1,19 @@
+env:
+    ENVIRONMENT: production
+    ENC_SECRET_KEY_BASE: ENC[AES256_GCM,data:8v3v8DO4FXEzXVZgWjPtWDJL+gcvXWTis7rp2JPh8yQ=,iv:34yDnJDRg8AXzRtSERAeScGeitj/oV7/AyZ4AS6ut3s=,tag:Sq3SPPPlXtlLbNYRAt+byw==,type:str]
+    RAILS_LOG_TO_STDOUT: "true"
+sops:
+    kms:
+        - arn: arn:aws:kms:us-west-2:478041131377:key/d222752c-be9f-4945-b17f-a52f694bc8ef
+          created_at: "2024-01-05T08:31:07Z"
+          enc: AQICAHjrC1N+BaDn8oOmDbPP/08kRoh4Co3gLg7rtUmicxHcsQG+LMju4t3atT+l5VQSSIXkAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMX6ajGKHE+G9Tes+EAgEQgDuXyUD1z7eZlOF6fNMQjJkBu9mUzdk8xpyizIDdE8W9iUCuocYZk9sVepHQLgfzYnbN7Ojs8bVhDtHVyw==
+          aws_profile: ""
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age: []
+    lastmodified: "2024-01-08T05:27:28Z"
+    mac: ENC[AES256_GCM,data:VT44bqOpgUxJAttix+qjYSB4Tk0O/nDuXZyLIBrzBzo7U4AikqVxZT8xxSF4F18jrwLKmsbn6SUSvLlOwXkmn4W/r/nGvp4YbF4UvFq/IETPs3V6uht5isyAhX0BZCE3MRiKfGgrb6Lj8AJ6oM1ALRAcYfmt9C5nOEmh93cLpWM=,iv:8WQp7ClbDSsI3gEroIirImVCJj6m3RDYZDnMh305p9A=,tag:7iA5h5Cg+EQIOAUxQXPH8w==,type:str]
+    pgp: []
+    encrypted_regex: ^ENC
+    version: 3.8.1

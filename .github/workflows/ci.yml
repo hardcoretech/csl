@@ -1,0 +1,127 @@
+# Reusable workflow to run lint, test, build, push docker image.
+name: Reusable CI Workflow
+
+on:
+  workflow_call:
+    # GitHub Actions doesn't directly support passing secrets between workflows.
+    # Workflows that call reusable workflows in the same organization or
+    # enterprise can use the inherit keyword to implicitly pass the secrets.
+    # Therefore, we should pass the secret to the workflow_call workflow.
+    # Ref: https://github.com/orgs/community/discussions/23107
+    secrets:
+      HC_GITHUB_SSH_KEY:
+        required: true
+      SLACK_WEBHOOK_URL:
+        required: true
+    inputs:
+      should_push_image:
+        description: 'Whether to push image to ECR'
+        required: true
+        type: boolean
+    outputs:
+      app_version:
+        value: ${{ jobs.test.outputs.app_version }}
+
+jobs:
+  lint:
+    runs-on: [self-hosted, general, small]
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1024
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+
+      - name: pre-commit (PR)
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha}}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha}}
+        run: |
+          python -m pip install pre-commit
+          # the bug for virualenv/setuptools/pip
+          # ref: https://github.com/pypa/setuptools/issues/2353
+          SETUPTOOLS_USE_DISTUTILS=stdlib pre-commit run --from-ref $BASE_SHA --to-ref $HEAD_SHA --all-files || (git --no-pager diff && false)
+
+      - name: pre-commit (push)
+        if: github.event_name == 'push'
+        env:
+          BASE_SHA: ${{ github.event.before}}
+          HEAD_SHA: ${{ github.event.after}}
+        run: |
+          python -m pip install pre-commit
+          SETUPTOOLS_USE_DISTUTILS=stdlib pre-commit run --from-ref $BASE_SHA --to-ref $HEAD_SHA --all-files || (git --no-pager diff && false)
+
+  test:
+    runs-on: [self-hosted, general, small]
+    needs:
+      - lint
+    timeout-minutes: 10
+    outputs:
+      app_version: ${{ steps.app-version.outputs.APP_VERSION }}
+    env:
+      PRIVATE_GH_REPO_SSH_KEY_PATH: /tmp/ssh_key
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v4
+
+      - id: app-version
+        name: Set APP_VERSION
+        run: |
+          APP_VERSION=$(make gen-version)
+          echo "APP_VERSION=$APP_VERSION" >> $GITHUB_ENV
+          echo "APP_VERSION=$APP_VERSION" >> $GITHUB_OUTPUT
+
+      - name: prepare ssh key for private github repo
+        run: |
+          echo "${{ secrets.HC_GITHUB_SSH_KEY }}" > $PRIVATE_GH_REPO_SSH_KEY_PATH
+          mkdir -p ~/.ssh && cp $PRIVATE_GH_REPO_SSH_KEY_PATH ~/.ssh/id_rsa
+
+      - name: build docker images
+        run: |
+          make build-docker-image IMAGE_TAG=$APP_VERSION
+
+      - name: run tests
+        run: |
+          make test
+
+      # # Scan the Docker images and packages
+      # - name: Run Trivy vulnerability scanner
+      #   uses: aquasecurity/trivy-action@master
+      #   with:
+      #     image-ref: "${{ env.IMAGE_NAME }}:${{ env.APP_VERSION }}"
+      #     format: 'table'
+      #     exit-code: '1'
+      #     ignore-unfixed: true
+      #     vuln-type: 'os,library'
+      #     severity: 'CRITICAL,HIGH'
+      #   env:
+      #     IMAGE_NAME: gofreight/csl-api
+
+      - name: push docker images
+        if: ${{ inputs.should_push_image }}
+        run: |
+          aws ecr describe-repositories --repository-names $IMAGE_NAME > /dev/null 2>&1 || aws ecr create-repository --repository-name $IMAGE_NAME-api
+          aws ecr describe-repositories --repository-names $IMAGE_NAME > /dev/null 2>&1 || aws ecr create-repository --repository-name $IMAGE_NAME-data-import
+          aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
+          make push-docker-image IMAGE_TAG=$APP_VERSION
+        env:
+          AWS_ACCOUNT_ID: 478041131377
+          AWS_REGION: us-west-2
+          IMAGE_NAME: gofreight/csl
+
+      - name: tear down
+        run: |
+          make tear-down
+
+      - name: slack notification
+        if: ${{ failure() }}
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_COLOR: '#ff0000'
+          SLACK_MESSAGE: |
+            Repository: ${{ github.repository }}

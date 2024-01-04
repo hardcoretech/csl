@@ -1,0 +1,54 @@
+# Reuseable workflow to update image tag in values-version.yaml
+name: Update Image Tag Workflow
+
+on:
+  workflow_call:
+    # GitHub Actions doesn't directly support passing secrets between workflows.
+    # Workflows that call reusable workflows in the same organization or
+    # enterprise can use the inherit keyword to implicitly pass the secrets.
+    # Therefore, we should pass the secret to the workflow_call workflow.
+    # Ref: https://github.com/orgs/community/discussions/23107
+    secrets:
+      SLACK_WEBHOOK_URL:
+        required: true
+    inputs:
+      commit_sha:
+        description: 'base commit_sha to update'
+        required: true
+        type: string
+      image_tag:
+        description: 'Image tag to update'
+        required: true
+        type: string
+
+jobs:
+  update_image_tag:
+    runs-on: [self-hosted, general, small]
+    steps:
+      - name: Checkout commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.commit_sha }}
+
+      - name: Update image tag in values-version.yaml
+        run: |
+          make update-image-tag IMAGE_TAG=${{ inputs.image_tag }}
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add deployment/kubernetes/charts/csl/values-version.yaml
+          git commit -m "Update image.tag via GitHub Action"
+          git tag ${{ inputs.image_tag }}
+          git push origin ${{ inputs.image_tag }}
+          git push -f origin HEAD:release-stage
+
+      - name: slack notification
+        if: ${{ failure() }}
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_COLOR: '#ff0000'
+          SLACK_MESSAGE: |
+            Repository: ${{ github.repository }}
