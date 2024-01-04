@@ -1,0 +1,12 @@
+name: PR Validation
+
+on: [pull_request]
+
+jobs:
+  ci:
+    uses: ./.github/workflows/ci.yml
+    secrets:
+      HC_GITHUB_SSH_KEY: ${{ secrets.HC_GITHUB_SSH_KEY }}  # required for install private package from github private repo with SSH key
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_PR_CI_WEBHOOK_URL }}
+    with:
+      should_push_image: false

@@ -1,0 +1,30 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: "{{ .Release.Name }}-cron-{{ .name }}"
+  labels:
+    {{- include "project.labels" . | nindent 4 }}
+spec:
+  revisionHistoryLimit: 1
+  schedule: "*/30 * * * *"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      backoffLimit: 2
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: data-import
+              image: "{{ .Values.cronjob.image.repository }}:{{ .Values.image.tag }}"
+              imagePullPolicy: {{ .Values.cronjob.image.pullPolicy }}
+              resources:
+                requests:
+                  cpu: {{ .Values.cronjob.resources.requests.cpu }}
+                  memory: {{ .Values.cronjob.resources.requests.memory }}
+                limits:
+                  cpu: {{ .Values.cronjob.resources.limits.cpu }}
+                  memory: {{ .Values.cronjob.resources.limits.memory }}
+              envFrom:
+                - configMapRef:
+                    name: {{ .Release.Name }}-env

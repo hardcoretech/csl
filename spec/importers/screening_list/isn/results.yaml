@@ -2,9 +2,9 @@
 - :name: 150th Aircraft Repair Plant (ARZ) (Kaliningrad)
   :federal_register_notice: Vol. 81, No. 128, 07/05/16
   :start_date: '2016-06-28'
-  :remarks: 
+  :remarks:
   :source_list_url: http://www.state.gov/t/isn/c15231.htm
-  :alt_names: 
+  :alt_names:
   :country: RU
   :id: 66a593540d9afb462007a039dc4ba73bbf0306b8
   :source: &1
@@ -20,9 +20,9 @@
 - :name: Amir Hossein Rahimyar
   :federal_register_notice: Vol. 78, No. 38, 02/26/13
   :start_date: '2012-12-13'
-  :remarks: 
+  :remarks:
   :source_list_url: http://www.state.gov/t/isn/c15231.htm
-  :alt_names: 
+  :alt_names:
   :country: IR
   :id: f862fb370c69ed50a5448840cd5aafd3dbfef568
   :source: *1
@@ -38,7 +38,7 @@
   :start_date: '2009-01-09'
   :remarks: Associated with the A.Q. Khan Network
   :source_list_url: http://www.state.gov/t/isn/c15231.htm
-  :alt_names: 
+  :alt_names:
   :country: PK
   :id: 2d2db09c686e4829d0ef1b0b04145eec3d42cd88
   :source: *1

@@ -1,0 +1,36 @@
+name: Release for Production
+
+on:
+  release:
+    types:
+      - created
+  workflow_dispatch:
+
+jobs:
+  deploy-production:
+    runs-on: [self-hosted, general, small]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: release
+          fetch-tags: true
+
+      - name: Validate if GITHUB_RES belongs to Git Tag
+        run: |
+          echo $GITHUB_REF
+          git describe --tags $GITHUB_REF
+
+      - name: Release the specified git tag to production
+        run: |
+          git fetch --unshallow --tags
+          git reset --hard $GITHUB_REF
+          git push -f origin HEAD:release
+
+      - name: slack notification
+        if: ${{ failure() }}
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_CI_CRITICAL_WEBHOOK_URL }}
+          SLACK_COLOR: '#ff0000'
+          SLACK_MESSAGE: |
+            Repository: ${{ github.repository }}

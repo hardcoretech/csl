@@ -1,5 +1,5 @@
 ########################################
-# Backend Builder stage
+# Builder stage
 ########################################
 FROM python:3.11-bookworm AS builder
     # python
@@ -15,11 +15,6 @@ ENV PYTHONUNBUFFERED=1 \
 
 WORKDIR /repo
 
-RUN set -ex \
-    && apt-get update \
-    && apt-get install -y --no-install-recommends \
-	&& rm -rf /var/lib/apt/lists/*
-
 COPY pyproject.toml poetry.lock ./
 
     # Upgrade pip and install poetry
@@ -32,7 +27,7 @@ RUN pip install --no-cache-dir pip==23.3.1 poetry==1.7.1 && \
     find /repo/wheels/ -name '*.whl' > /repo/requirements-wheel.txt
 
 ########################################
-# Backend Final stage
+# Final stage
 ########################################
 FROM python:3.11-slim-bookworm
 

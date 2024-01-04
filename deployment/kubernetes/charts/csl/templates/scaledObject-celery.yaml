@@ -1,0 +1,20 @@
+{{- range $celery := .Values.celeries }}
+
+{{- if $celery.scaledObject.enabled }}
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: {{ $.Release.Name }}-celery
+  labels:
+    {{- include "project.labels" $ | nindent 4 }}
+spec:
+  scaleTargetRef:
+    name: {{ $.Release.Name }}-{{ $celery.name }}
+  minReplicaCount: {{ $celery.scaledObject.minReplicaCount }}
+  maxReplicaCount: {{ $celery.scaledObject.maxReplicaCount }}
+  triggers:
+{{- with $celery.scaledObject.triggers }}
+{{ toYaml . | indent 2 }}
+{{ end }}
+{{- end }}
+{{- end }}

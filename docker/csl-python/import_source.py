@@ -1,22 +1,21 @@
 import logging
 import os
 import re
-import time
 import traceback
+import warnings
 from datetime import datetime
 
 import requests
 from elasticsearch import Elasticsearch
-from elasticsearch.exceptions import ConnectionError
+from elasticsearch.exceptions import ConnectionError, ElasticsearchWarning
 
-import warnings
-from elasticsearch.exceptions import ElasticsearchWarning
 warnings.simplefilter('ignore', ElasticsearchWarning)
 
 STOP_WORDS = {'and', 'the', 'los'}
 COMMON_WORDS = {
-    'co', 'company', 'corp', 'corporation', 'inc', 'incorporated', 'limited', 'ltd', 'mr', 'mrs', 'ms',
-    'organization', 'sa', 'sas', 'llc', 'university', 'univ'
+    'co', 'company', 'corp', 'corporation', 'inc', 'incorporated', 'limited',
+    'ltd', 'mr', 'mrs', 'ms', 'organization', 'sa', 'sas', 'llc', 'university',
+    'univ'
 }
 
 
@@ -64,13 +63,13 @@ def has_any_common_words(name):
 
 def make_names_with_common(doc, prefix):
     doc[f'{prefix}_no_ws_with_common'] = doc[f'{prefix}_idx'].replace(' ', '')
-    doc[f'{prefix}_no_ws_rev_with_common'] = name_rev(doc[f'{prefix}_idx']).replace(' ', '')
+    doc[f'{prefix}_no_ws_rev_with_common'] = name_rev(doc[f'{prefix}_idx']).replace(' ', '')    # noqa
     doc[f'{prefix}_idx'] = remove_words(doc[f'{prefix}_idx'], COMMON_WORDS)
 
 
 def make_alt_names_with_common(doc):
     doc['alt_no_ws_with_common'] = [n.replace(' ', '') for n in doc['alt_idx']]
-    doc['alt_no_ws_rev_with_common'] = [name_rev(n.replace(' ', '')) for n in doc['alt_idx']]
+    doc['alt_no_ws_rev_with_common'] = [name_rev(n.replace(' ', '')) for n in doc['alt_idx']]   # noqa
     doc['alt_idx'] = [remove_words(n, COMMON_WORDS) for n in doc['alt_idx']]
 
 
@@ -83,7 +82,7 @@ def name_rev(name):
 def make_full_addresses(doc):
     if doc.get('addresses'):
         for addr in doc.get('addresses'):
-            addr_info = [addr[k] for k in ['address', 'city', 'country', 'postal_code', 'state'] if addr[k]]
+            addr_info = [addr[k] for k in ['address', 'city', 'country', 'postal_code', 'state'] if addr[k]]    # noqa
             addr['full_address'] = ', '.join(addr_info) if addr_info else None
     return doc
 
@@ -104,7 +103,7 @@ def make_source_object(name, doc):
 
 
 def get_json_data(url):
-    r = requests.get(url)
+    r = requests.get(url, timeout=600)
     return r.json()
 
 
@@ -114,6 +113,7 @@ logger.setLevel(logging.INFO)
 steam_handler = logging.StreamHandler()
 steam_handler.setLevel(logging.INFO)
 logger.addHandler(steam_handler)
+
 
 class BaseImporter:
     ES_INDEX_NAME = None
@@ -169,7 +169,7 @@ SOURCE_IMPORTER_CLASSES = [ISNImporter, NSMBSImporter]
 
 
 def is_isn_source(doc) -> bool:
-    return f'(ISN)' in doc['source']
+    return '(ISN)' in doc['source']
 
 
 if __name__ == '__main__':
@@ -178,20 +178,20 @@ if __name__ == '__main__':
 
     es = Elasticsearch(hosts=es_url)
 
-    source_importers = [importer_cls(es) for importer_cls in SOURCE_IMPORTER_CLASSES]
+    source_importers = [importer_cls(es) for importer_cls in SOURCE_IMPORTER_CLASSES]   # noqa
 
-    logger.info('Start import CSL source: ' + datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+    logger.info('Start import CSL source: ' + datetime.now().strftime('%Y-%m-%d %H:%M:%S'))     # noqa
     try:
         if not es.ping():
             raise ConnectionError
 
-        json_data = get_json_data('https://api.trade.gov/static/consolidated_screening_list/consolidated.json')
+        json_data = get_json_data('https://api.trade.gov/static/consolidated_screening_list/consolidated.json') # noqa
 
         for importer in source_importers:
             importer.do_import(json_data)
 
-        logger.info('Finish import CSL source: ' + datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+        logger.info('Finish import CSL source: ' + datetime.now().strftime('%Y-%m-%d %H:%M:%S'))    # noqa
     except ConnectionError:
         logger.error('Connect ES server failed')
     except Exception as e:
-            logger.error(f'Import CSL source failed: {e}, {traceback.format_exc()}')
+        logger.error(f'Import CSL source failed: {e}, {traceback.format_exc()}')    # noqa

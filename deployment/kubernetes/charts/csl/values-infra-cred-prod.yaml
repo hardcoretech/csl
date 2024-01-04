@@ -1,0 +1,17 @@
+infraEnv:
+    ELASTICSEARCH_URL: ENC[AES256_GCM,data:IfvHqva3aP/26H96CTy9T8o3MGoQy5bvMl5v5qEobN9OqyH16C4XP/KEHsg421gJ3sD4D+XOUh+qsqOJz9ZoMH0lyxa5ztMaVr0bVMfYSA2Xp7mfitTGcl0ivXEyVabXbP4EUA==,iv:nI1fZDHUrXkX0lirsXvoRiGHPvcS8SfplpbImnku1gE=,tag:SdoD/2O3urTgsZ+v5rt1zg==,type:str]
+sops:
+    kms:
+        - arn: arn:aws:kms:us-west-2:478041131377:key/3531ff74-9fc2-4088-982f-e24170377116
+          created_at: "2024-01-05T08:30:26Z"
+          enc: AQICAHg0Er1cllAzsJBfqLJDdcEGCgPovBlIgMnXYfrsx9VtQwHEugOamNErCel7vtrDcvtGAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQM4BHz/dHGzucTjxKsAgEQgDskNaZlHeNmaMtZpi3WV7I/CcfNObj8O2WIII5TknDXDL9+HI4TvodgXLeNNwTtZauweS5SXvT0b4yyDQ==
+          aws_profile: ""
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age: []
+    lastmodified: "2024-01-05T08:30:26Z"
+    mac: ENC[AES256_GCM,data:D+R5MQ+FwNy4/LjNZjco9Dru995TApViqUaqpiUxHOysifKGPdJDf/RaCHmsE3hs5CnuNmv7VEa+4qStjuREOXZfl7OUwZAGAx00TmIqlMiqOPPt4tNeuwqKJa+KqIU2e7AYyQ3B6QPB8CpKGf9xqbGrjiPv8ibyF4jmIxsrN5s=,iv:Fqbwd5V/L3UQUjJNGn7y2uBC7tDkpSVT4hqPYsNM/XU=,tag:E511SaluH5XmoTC0LsM7Fw==,type:str]
+    pgp: []
+    encrypted_regex: ^infraEnv
+    version: 3.8.1

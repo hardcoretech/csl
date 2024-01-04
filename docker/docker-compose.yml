@@ -28,15 +28,15 @@ services:
     rails:
         build:
             context: ./../
-            dockerfile: $PWD/csl/Dockerfile
+            dockerfile: docker/csl/Dockerfile
         container_name: csl-api
         environment:
             - RECREATE_DB=true
-            - SECRET_KEY_BASE=fake-key
-            - ELASTICSEARCH_URL=elastic:9200
-        command: ["tail", "-f", "/dev/null"]
+            - ENC_SECRET_KEY_BASE=fake-key
+            - ELASTICSEARCH_URL=http://elastic:9200
+        platform: linux/amd64
         volumes:
-          - $PWD/../:/app
+          - $PWD:/app
         ports:
           - 3000:3000
         depends_on:
@@ -44,9 +44,10 @@ services:
 
     python:
         build:
-            context: ./csl-python/
-            dockerfile: $PWD/csl-python/Dockerfile
+            context: ./csl-python
+            dockerfile: Dockerfile
         container_name: csl-python
+        platform: linux/amd64
         environment:
             - RECREATE_DB=true
             - ELASTICSEARCH_URL=http://elastic:9200

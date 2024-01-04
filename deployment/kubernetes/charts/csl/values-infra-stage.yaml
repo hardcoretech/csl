@@ -1,0 +1,156 @@
+image:
+    repository: 478041131377.dkr.ecr.us-west-2.amazonaws.com/gofreight/csl-api
+    pullPolicy: Always
+
+service:
+    type: ClusterIP
+    port: 80
+ingress:
+    className: alb
+    host: denied-party-stage.gofreight.co
+    annotations:
+        alb.ingress.kubernetes.io/load-balancer-name: old-stage-alb
+        alb.ingress.kubernetes.io/group.name: old-stage
+        alb.ingress.kubernetes.io/healthcheck-path: /health
+        alb.ingress.kubernetes.io/scheme: internet-facing
+        alb.ingress.kubernetes.io/target-type: ip
+        alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-west-2:478041131377:certificate/d3cd776b-ccfd-46c4-a073-d8961f44c4f4
+        alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}, {"HTTPS": 11999}]'
+        alb.ingress.kubernetes.io/ssl-redirect: "443"
+
+# Enable internal ingress if we want to enable CN network
+internalIngress:
+    enabled: false
+    className: internal-nginx
+    host: denied-party-stage.gofreight.co
+    annotations:
+        nginx.ingress.kubernetes.io/proxy-read-timeout: "60"
+        nginx.ingress.kubernetes.io/proxy-body-size: "2m"
+
+app:
+    replicaCount: 3
+    containerPort: 3000
+    annotations: {}
+    podSecurityContext: {}
+    containerSecurityContext: {}
+    nodeSelector:
+        Service: "Application"
+        Type: "General"
+    resources: {}
+    startupProbe: {}
+    readinessProbe:
+        httpGet:
+            path: "/health"
+            port: 3000
+            scheme: HTTP
+        initialDelaySeconds: 10
+        periodSeconds: 10
+        timeoutSeconds: 1
+        successThreshold: 1
+        failureThreshold: 3
+    livenessProbe:
+        httpGet:
+            path: "/health"
+            port: 3000
+            scheme: HTTP
+        initialDelaySeconds: 10
+        periodSeconds: 10
+        timeoutSeconds: 1
+        successThreshold: 1
+        failureThreshold: 5
+    migratedJob:
+        enabled: false
+        command:
+            - ./manage.py
+            - migrate
+    scaledObject:
+        enabled: false
+        minReplicaCount: 3
+        maxReplicaCount: 10
+
+        triggers:
+            - type: prometheus
+              metadata:
+                  serverAddress: http://kube-prometheus-stack-prometheus.monitoring:9090
+                  metricName: pod_cpu_utilization_over_pod_request
+                  threshold: "70"
+                  query: round(100 * sum(rate(container_cpu_usage_seconds_total{container="app",namespace=~"{{ .Release.Namespace }}",pod=~"{{ .Release.Name }}-.*"}[1m]))/avg(kube_pod_container_resource_requests{container="app",namespace=~"{{ .Release.Namespace }}",pod=~"{{ .Release.Name }}-.*",resource="cpu"}))
+
+cronjob:
+    image:
+        repository: 478041131377.dkr.ecr.us-west-2.amazonaws.com/gofreight/csl-data-import
+        pullPolicy: Always
+    resources:
+        requests:
+            cpu: 300m
+            memory: 512Mi
+        limits:
+            cpu: 300m
+            memory: 512Mi
+
+celeries:
+    - name: celery
+      enabled: false
+      replicaCount: 3
+      command:
+          - sleep
+          - infinity
+      annotations: {}
+      podSecurityContext: {}
+      containerSecurityContext: {}
+      nodeSelector:
+          Service: "Application"
+          Type: "Memory"
+      resources: {}
+      # startupProbe: {}
+      # readinessProbe:
+      #   httpGet:
+      #     path: "/"
+      #     port: 3000
+      #     scheme: HTTP
+      #   initialDelaySeconds: 10
+      #   periodSeconds: 10
+      #   timeoutSeconds: 1
+      #   successThreshold: 1
+      #   failureThreshold: 3
+      # livenessProbe: {}
+      scaledObject:
+          enabled: false
+          minReplicaCount: 3
+          maxReplicaCount: 10
+          triggers: []
+          # - type: aws-cloudwatch
+          #   metadata:
+          #     namespace: ContainerInsights
+          #     metricName: pod_memory_utilization_over_pod_limit
+          #     dimensionName: ClusterName;Namespace;PodName
+          #     dimensionValue: xxx
+          #     minMetricValue: xxx
+          #     targetMetricValue: xxx
+          #     metricCollectionTime: xxx
+          #     metricStatPeriod: xxx
+          #     metricStat: Sum
+          #     awsRegion: "us-west-2"
+          #     identityOwner: operator
+          # - type: aws-cloudwatch
+          #   metadata:
+          #     namespace: ContainerInsights
+          #     metricName: pod_cpu_utilization_over_pod_limit
+          #     dimensionName: ClusterName;Namespace;PodName
+          #     dimensionValue: xxx
+          #     minMetricValue: xxx
+          #     targetMetricValue: xxx
+          #     metricCollectionTime: xxx
+          #     metricStatPeriod: xxx
+          #     metricStat: Sum
+          #     awsRegion: "us-west-2"
+          #     identityOwner: operator
+celeryBeat:
+    enabled: false
+    command:
+        - sleep
+        - infinity
+    nodeSelector:
+        Service: "Application"
+        Type: "Memory"
+    resources: {}

@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  labels:
+    {{- include "project.labels" . | nindent 4 }}
+spec:
+  revisionHistoryLimit: 2
+  {{- if not .Values.app.scaledObject.enabled }}
+  replicas: {{ .Values.app.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "project.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.app.annotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "project.selectorLabels" . | nindent 8 }}
+    spec:
+      securityContext:
+        {{- toYaml .Values.app.podSecurityContext | nindent 8 }}
+      nodeSelector:
+        {{- toYaml .Values.app.nodeSelector | nindent 8 }}
+      containers:
+        - name: app
+          securityContext:
+            {{- toYaml .Values.app.containerSecurityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["bundle", "exec", "rails", "s", "-b", "0.0.0.0"]
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-env
+          ports:
+            - name: http
+              containerPort: {{ .Values.app.containerPort }}
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.app.resources | nindent 12 }}
+
+          {{- if .Values.app.startupProbe }}
+          startupProbe:
+            {{- toYaml .Values.app.startupProbe | nindent 12 }}
+          {{- end }}
+          {{- if .Values.app.readinessProbe }}
+          readinessProbe:
+            {{- toYaml .Values.app.readinessProbe | nindent 12 }}
+          {{- end }}
+          {{- if .Values.app.livenessProbe }}
+          livenessProbe:
+            {{- toYaml .Values.app.livenessProbe | nindent 12 }}
+          {{- end }}

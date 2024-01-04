@@ -1,0 +1,34 @@
+{{- if .Values.celeryBeat.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-celery-beat
+  labels:
+    {{- include "project.labels" . | nindent 4 }}
+spec:
+  revisionHistoryLimit: 2
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "project.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: celery-beat
+  template:
+    metadata:
+      labels:
+        {{- include "project.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: celery-beat
+    spec:
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      nodeSelector:
+        {{- toYaml .Values.celeryBeat.nodeSelector | nindent 8 }}
+      containers:
+        - name: celery-beat
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-env
+          resources:
+            {{- toYaml .Values.celeryBeat.resources | nindent 12 }}
+{{- end }}
